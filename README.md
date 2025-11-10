@@ -28,7 +28,7 @@ npm install
 # yarn install
 ```
 
-3. Entre na pasta:
+2. Entre na pasta:
 
 ```bash
 cd fiap-bank
