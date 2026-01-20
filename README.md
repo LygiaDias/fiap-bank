@@ -27,7 +27,14 @@ npm install
 # ou com yarn
 # yarn install
 ```
-2. Rode o servidor de desenvolvimento:
+
+2. Entre na pasta:
+
+```bash
+cd fiap-bank
+
+```
+3. Rode o servidor de desenvolvimento:
 ```bash
 
 npm run dev
