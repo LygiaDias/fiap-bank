@@ -1,20 +1,28 @@
 services:
   transactions:
     build:
-      context: ./transactions
+      context: .
+      dockerfile: ./transactions/Dockerfile
     container_name: fiap-transactions
     ports:
       - "3001:3001"
     environment:
       - NEXT_PRIVATE_LOCAL_WEBPACK=true
+    volumes:
+      - .:/app
+    working_dir: /app/transactions
 
   shell:
     build:
-      context: ./shell
+      context: .
+      dockerfile: ./shell/Dockerfile
     container_name: fiap-shell
     ports:
       - "3000:3000"
     environment:
       - NEXT_PRIVATE_LOCAL_WEBPACK=true
+    volumes:
+      - .:/app
+    working_dir: /app/shell
     depends_on:
       - transactions

@@ -1,74 +1,28 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./remotes/**/*.{js,ts,jsx,tsx}",
-  ],
+import { join } from "path";
 
-  safelist: [
-    // layout
-    "container",
-    "min-h-screen",
-    "flex",
-    "grid",
-    "items-center",
-    "justify-center",
-    "justify-between",
-    "gap-2",
-    "gap-3",
-    "gap-4",
-    "p-2",
-    "p-4",
-    "p-6",
-    "p-8",
-    "px-4",
-    "px-6",
-    "py-2",
-    "py-3",
-    "mb-3",
-    "mb-4",
-    "mb-6",
-    "mb-8",
-    "rounded-lg",
-    "rounded-2xl",
-    "rounded-3xl",
-    "shadow",
-    "shadow-lg",
-    "border",
+export const content = [
+  join(__dirname, "./pages/**/*.{js,ts,jsx,tsx}"),
+  join(__dirname, "./components/**/*.{js,ts,jsx,tsx}"),
+  join(__dirname, "./remotes/**/*.{js,ts,jsx,tsx}"),
 
-    // cores usadas no transactions
-    "bg-fiapLight",
-    "text-fiapPink",
-    "bg-fiapPink",
-    "text-white",
-    "text-gray-500",
-    "text-gray-600",
-    "text-gray-400",
-    "text-green-600",
-    "text-red-600",
-
-    // responsivo
-    "md:grid-cols-2",
-    "md:grid-cols-3",
-    "md:grid-cols-4",
-    "md:flex-row",
-    "md:w-56",
-
-    // hovers comuns
-    "hover:bg-pink-600",
-  ],
-
-  theme: {
-    extend: {
-      colors: {
-        fiapPink: "#e6007e",
-        fiapLight: "#fafafa",
-      },
-      backgroundImage: {
-        "fiap-gradient": "linear-gradient(135deg, #000000 0%, #e6007e 100%)",
-      },
+  // 🔥 agora o shell enxerga o transactions no container
+  join(__dirname, "../transactions/pages/**/*.{js,ts,jsx,tsx}"),
+  join(__dirname, "../transactions/components/**/*.{js,ts,jsx,tsx}"),
+  join(__dirname, "../transactions/context/**/*.{js,ts,jsx,tsx}"),
+  join(__dirname, "../transactions/remotes/**/*.{js,ts,jsx,tsx}"),
+];
+export const theme = {
+  extend: {
+    colors: {
+      fiapPink: "#e6007e",
+      fiapLight: "#fafafa",
+    },
+    boxShadow: {
+      card: "0 10px 30px rgba(0,0,0,0.12)",
+    },
+    backgroundImage: {
+      "fiap-gradient": "linear-gradient(135deg, #000000 0%, #e6007e 100%)",
     },
   },
-  plugins: [],
 };
+export const plugins = [];
