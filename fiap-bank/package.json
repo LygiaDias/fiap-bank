@@ -2,32 +2,42 @@
   "name": "fiap-bank",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "dev:shell": "npm run dev -w apps/shell",
+    "dev:dashboard": "npm run dev -w apps/dashboard",
+    "dev:transactions": "npm run dev -w apps/transactions",
+    "dev:all": "concurrently -n shell,dashboard,transactions -c auto \"npm run dev:shell\" \"npm run dev:dashboard\" \"npm run dev:transactions\""
   },
   "dependencies": {
+    "@module-federation/nextjs-mf": "^8.8.51",
+    "clsx": "^1.2.1",
+    "framer-motion": "^10.12.7",
+    "jspdf": "^4.0.0",
     "next": "13.5.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "clsx": "^1.2.1",
-    "framer-motion": "^10.12.7"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.1.6",
-    "@types/react": "^18.2.21",
-    "@types/node": "^20.4.2",
-    "tailwindcss": "^3.4.14",
-    "postcss": "^8.4.24",
-    "autoprefixer": "^10.4.14",
-    "@storybook/react": "7.0.0",
     "@storybook/addon-essentials": "7.0.0",
     "@storybook/addon-interactions": "7.0.0",
+    "@storybook/react": "7.0.0",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.21",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^9.2.1",
+    "msw": "^1.2.1",
+    "postcss": "^8.4.24",
     "storybook": "7.0.0",
-    "msw": "^1.2.1"
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.1.6"
   }
 }

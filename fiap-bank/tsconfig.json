@@ -38,7 +38,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "apps/dashboard/next.config.mjs", "apps/shell/next.config.mjs", "apps/transactions/next.config.mjs", "fiap-bank-mf/transactions/next.config.mjs", "fiap-bank-mf/shell/next.config.mjs"  ],
   "exclude": [
     "node_modules"
   ]

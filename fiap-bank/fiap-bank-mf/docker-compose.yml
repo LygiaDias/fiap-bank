@@ -1,0 +1,20 @@
+services:
+  transactions:
+    build:
+      context: ./transactions
+    container_name: fiap-transactions
+    ports:
+      - "3001:3001"
+    environment:
+      - NEXT_PRIVATE_LOCAL_WEBPACK=true
+
+  shell:
+    build:
+      context: ./shell
+    container_name: fiap-shell
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PRIVATE_LOCAL_WEBPACK=true
+    depends_on:
+      - transactions

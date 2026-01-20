@@ -1,12 +1,23 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+export type Attachment = {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  previewUrl?: string;
+};
+
 export type Transaction = {
   id: string;
   type: "deposit" | "transfer" | "payment" | "withdraw";
   amount: number;
   description?: string;
   date: string;
+
+  category?: string;
+  attachments?: Attachment[];
 };
 
 type ContextValue = {
