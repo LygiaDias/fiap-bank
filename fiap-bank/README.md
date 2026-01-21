@@ -1,102 +1,185 @@
 # FIAP Bank — Tech Challenge (Microfrontends)
 
-Projeto desenvolvido para o **Tech Challenge FIAP**, com foco em **escalabilidade**, **arquitetura de microfrontends**, **deploy cloud**, melhorias de **UX**, **performance** e **segurança**.
+Repositório: https://github.com/LygiaDias/fiap-bank.git
 
-A aplicação é um gerenciador financeiro com Dashboard e Transações, evoluída para uma arquitetura de **Microfrontends** utilizando **Next.js + Module Federation**.
+Este projeto é uma aplicação de gerenciamento financeiro construída com **Next.js + React + TypeScript**, evoluída para uma arquitetura de **Microfrontends** usando **Module Federation**.
 
 ---
 
-## ✨ Funcionalidades Implementadas
+## 🎯 Objetivo do Tech Challenge
 
-### 🏠 Dashboard (Home)
-- Widgets e visão geral financeira
-- Cards de insights:
-  - Entradas
-  - Saídas
-  - Saldo do período
-  - Maior gasto
-- Listagem de últimas transações
-
-### 💳 Transações
-- Listagem completa de transações
-- Busca e filtros avançados:
-  - por descrição
-  - por tipo
-  - por categoria
-  - por valor mínimo/máximo
-  - por período (data inicial e final)
-- Paginação estilo “Carregar mais”
-- Adicionar e editar transação
-- Validação avançada (UX)
-- Upload de anexos (PDF/JPG/PNG)
-- Exibição de categoria e anexos na listagem
-- Exportação:
-  - CSV
-  - PDF Premium
+Aprimorar e escalar a aplicação existente, incluindo:
+- Dashboard com análises financeiras
+- Listagem de transações com filtros avançados e busca
+- Paginação/scroll infinito (carregar mais)
+- Criar/editar transações com validações avançadas
+- Upload de anexos (comprovantes)
+- Melhorias de performance, segurança e UX
+- Deploy e execução em ambientes cloud
+- Containerização com Docker
 
 ---
 
 ## 🧱 Arquitetura (Microfrontends)
 
-A aplicação é composta por 2 apps:
+O projeto foi separado em 2 aplicações (MVP funcional):
 
-### 1) Shell (Host) — Porta 3000
-Responsável por:
-- Tela de boas-vindas
-- Navegação
-- Carregamento do microfrontend remoto via Module Federation
-
-📍 URL: http://localhost:3000
-
-### 2) Transactions (Remote) — Porta 3001
-Responsável por:
-- Dashboard (`/home`)
-- Página de transações (`/transactions`)
-- Contexto e regras de negócio do módulo de transações
-
-📍 URL: http://localhost:3001
+- **shell (host)** → porta **3000**
+  - Tela de boas-vindas
+  - Rotas `/home` e `/transactions` carregam módulos remotos
+- **transactions (remote)** → porta **3001**
+  - Dashboard/Home completo
+  - Página de transações com filtros, anexos e exportação
 
 ---
 
-## 🔌 Integração entre Microfrontends
+## 🗂 Estrutura de pastas (microfront)
 
-O **Shell** carrega páginas do **Transactions** via Module Federation.
-
-Exemplo:
-- Shell acessa `/home` → renderiza o remote `transactions/HomeRemote`
-- Shell acessa `/transactions` → renderiza o remote `transactions/TransactionsRemote`
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Next.js**
-- **React**
-- **TypeScript**
-- **Module Federation** (`@module-federation/nextjs-mf`)
-- **TailwindCSS**
-- **Docker / Docker Compose**
-- **Storybook**
-- **Framer Motion**
-- **jsPDF**
+```
+fiap-bank-mf/
+  shell/
+  transactions/
+  docker-compose.yml
+```
 
 ---
 
-## 📦 Pré-requisitos
+## 🧪 Rotas
 
-Para rodar localmente, você precisa ter instalado:
+### Shell (host)
+- `http://localhost:3000/` → Welcome
+- `http://localhost:3000/home` → Dashboard remoto
+- `http://localhost:3000/transactions` → Transações remoto
 
-- Node.js **18+** (recomendado 20)
-- npm ou yarn
-- Docker Desktop (opcional, mas recomendado)
+### Transactions (remote)
+- `http://localhost:3001/home` → Dashboard local
+- `http://localhost:3001/transactions` → Transações local
 
 ---
 
-# ▶️ Como Rodar o Projeto
+## 🚀 Como rodar localmente (sem Docker)
 
-## ✅ Opção 1 — Rodar com Docker (Recomendado)
+> Abra **2 terminais**.
 
-Na raiz do projeto:
+### Terminal 1 — Transactions (Remote)
+```bash
+cd fiap-bank-mf/transactions
+npm install
+npm run dev -p 3001
+```
+
+### Terminal 2 — Shell (Host)
+```bash
+cd fiap-bank-mf/shell
+npm install
+npm run dev -p 3000
+```
+
+Acesse:
+- Shell: http://localhost:3000
+- Home: http://localhost:3000/home
+- Transactions: http://localhost:3000/transactions
+
+---
+
+## 🐳 Como rodar com Docker (Docker Compose)
+
+Pré-requisito: **Docker Desktop** instalado e rodando.
+
+Na pasta `fiap-bank-mf`:
 
 ```bash
 docker compose up --build
+```
+
+Acesse:
+- http://localhost:3000
+
+---
+
+## 📦 Principais features entregues
+
+### Dashboard/Home
+- Cards de resumo (Entradas / Saídas / Saldo do período)
+- Widgets de visualização (ex: últimos dias, economia)
+- UX melhorado e layout responsivo
+
+### Transações
+- Busca por descrição / tipo / categoria
+- Filtros por:
+  - tipo
+  - valor mínimo e máximo
+  - intervalo de datas
+- Paginação estilo “Carregar mais”
+- Exibição de **categoria** e **anexos**
+- CRUD completo (criar / editar / excluir)
+
+### Exportação
+- Exportação **CSV**
+- Exportação **PDF Premium**
+
+---
+
+## 🧩 Module Federation (Resumo)
+
+### Remote (transactions)
+Expondo módulos:
+- `./DashboardRemote`
+- `./TransactionsRemote`
+
+### Host (shell)
+Consumindo:
+- `transactions@http://localhost:3001/_next/static/chunks/remoteEntry.js`
+
+---
+
+## ⚠️ Problemas comuns (Troubleshooting)
+
+### Remote offline (RUNTIME-008)
+- Verifique se o `transactions` está rodando na porta 3001
+- Verifique se o remoteEntry está acessível:
+  - `http://localhost:3001/_next/static/chunks/remoteEntry.js`
+
+### Global CSS
+No Next.js, `globals.css` deve ser importado apenas no:
+- `pages/_app.tsx`
+
+### `useTransactions must be used within TransactionsProvider`
+Isso acontece quando o componente remoto usa o hook sem Provider.
+Solução: garantir que o Remote exporte um wrapper com Provider, ou que o Shell envolva o remote com o Provider.
+
+---
+
+## ☁️ Deploy (Cloud)
+Recomendado: **Vercel**
+
+Deploy separado:
+- `shell` em um projeto
+- `transactions` em outro projeto
+
+Depois ajustar a URL do remote no shell:
+
+```js
+remotes: {
+  transactions:
+    "transactions@https://SEU-REMOTE.vercel.app/_next/static/chunks/remoteEntry.js",
+}
+```
+
+---
+
+## 📽️ Vídeo demonstrativo (Checklist)
+No vídeo, mostrar:
+- Navegação Shell → Home (remote)
+- Navegação Shell → Transactions (remote)
+- Criar transação
+- Editar transação
+- Filtros + busca + carregar mais
+- Upload e exibição de anexos
+- Exportar CSV e PDF
+- Rodando com Docker (opcional, se disponível)
+
+---
+
+## 👩‍💻 Autoria
+Projeto desenvolvido por: **Lygia Dias**
