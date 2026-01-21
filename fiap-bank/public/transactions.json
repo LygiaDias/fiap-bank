@@ -1,5 +1,0 @@
-[
-  { "id": "1", "type": "deposit", "amount": 4500, "description": "Salário", "date": "2025-11-01" },
-  { "id": "2", "type": "payment", "amount": -120, "description": "Internet", "date": "2025-10-28" },
-  { "id": "3", "type": "transfer", "amount": -350, "description": "Transferência: João", "date": "2025-10-27" }
-]
